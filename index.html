@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALL CAPS TUESDAY</title>
+  <meta name="description" content="A daily dose of the good stuff, yelled at you with love.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #d6e8d0;
+      --bg-card: #eef5ea;
+      --bg-hover: #ccdfc6;
+      --border: #b2ccaa;
+      --text: #253d25;
+      --muted: #6a8a65;
+      --accent: #c4604a;
+      --accent-soft: #fae4de;
+      --warm: #e8a87c;
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Figtree', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 24px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(42px, 8vw, 72px);
+      letter-spacing: 0.08em;
+      color: var(--text);
+      line-height: 1;
+      display: block;
+    }
+
+    .logo span { color: var(--accent); }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container { position: relative; z-index: 1; }
+
+    .tagline {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+
+    /* DAY BADGE */
+    .day-badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      border: 1px solid #f0b8a8;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      padding: 5px 14px;
+      margin-top: 16px;
+      text-transform: uppercase;
+    }
+
+    /* MAIN CARD */
+    .card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(36px, 6vw, 64px) clamp(28px, 6vw, 56px);
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      min-height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 16px rgba(180,120,80,0.07);
+    }
+
+    .card:hover {
+      background: var(--bg-hover);
+      border-color: #c9a882;
+      box-shadow: 0 4px 24px rgba(180,120,80,0.12);
+    }
+
+    .message {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.15;
+      letter-spacing: 0.03em;
+      color: var(--text);
+      text-align: center;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .message.out {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    /* ACTIONS */
+    .actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .btn {
+      font-family: 'Figtree', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 11px 22px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: var(--warm);
+      opacity: 1;
+    }
+
+    /* HINT */
+    .hint {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      font-style: italic;
+    }
+
+    /* STREAK */
+    .streak {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+
+    .streak strong { color: var(--accent); }
+
+    /* ABOUT */
+    .about {
+      border-top: 1px solid var(--border);
+      padding-top: 40px;
+      text-align: center;
+    }
+
+    .about p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 16px;
+    }
+
+    .about a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .about a:hover { text-decoration: underline; }
+
+    .about-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* COLOR EDITOR */
+    .color-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      transition: box-shadow 0.2s, transform 0.15s;
+      z-index: 100;
+    }
+    .color-toggle:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transform: scale(1.05);
+    }
+
+    .color-panel {
+      position: fixed;
+      bottom: 76px;
+      right: 24px;
+      width: 260px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      z-index: 99;
+      display: none;
+      font-family: 'Figtree', sans-serif;
+    }
+    .color-panel.open { display: block; }
+
+    .color-panel-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .preset-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .preset {
+      flex: 1;
+      height: 28px;
+      border-radius: 6px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.1s;
+    }
+    .preset:hover { transform: scale(1.08); }
+    .preset.active { border-color: var(--text); }
+
+    .color-rows { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+
+    .color-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .color-row label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .color-row input[type="color"] {
+      width: 36px;
+      height: 24px;
+      border: 1.5px solid var(--border);
+      border-radius: 5px;
+      padding: 1px 2px;
+      cursor: pointer;
+      background: transparent;
+    }
+
+    .panel-btn-row {
+      display: flex;
+      gap: 8px;
+    }
+    .panel-btn {
+      flex: 1;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Figtree', sans-serif;
+    }
+    .panel-btn-save {
+      background: var(--accent);
+      color: #fff;
+    }
+    .panel-btn-reset {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span class="logo">ALL CAPS <span>TUESDAY</span></span>
+    <p class="tagline">THE GOOD STUFF, YELLED AT YOU WITH LOVE</p>
+    <div class="day-badge" id="day-badge">loading...</div>
+  </div>
+
+  <!-- CARD -->
+  <div class="card" onclick="nextMessage()" title="Click for another">
+    <div class="message" id="message-text"></div>
+  </div>
+
+  <p class="hint">tap the card or the button for another one</p>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <button class="btn btn-primary" onclick="nextMessage()">another one ↓</button>
+    <button class="btn btn-ghost" onclick="dailyMessage()">today's</button>
+    <button class="btn btn-ghost" onclick="shareMessage()">share</button>
+  </div>
+
+  <!-- STREAK -->
+  <div class="streak" id="streak-display"></div>
+
+  <!-- ABOUT -->
+  <div class="about">
+    <span class="about-name">MAX PETE</span>
+    <p>ALL CAPS TUESDAY started as a LinkedIn series because sometimes you just need someone to yell something good at you. It's not always Tuesday. That's okay. The message still counts.</p>
+    <p>
+      <a href="https://maxpete.substack.com" target="_blank">Newsletter</a> &nbsp;·&nbsp;
+      <a href="https://www.linkedin.com/in/maxpete/" target="_blank">LinkedIn</a>
+    </p>
+  </div>
+
+</div>
+
+<!-- COLOR EDITOR -->
+<button class="color-toggle" id="color-toggle" title="Customize colors">🎨</button>
+
+<div class="color-panel" id="color-panel">
+  <div class="color-panel-title">Colors</div>
+
+  <div class="preset-row">
+    <div class="preset" id="preset-sage" title="Sage" style="background:#d6e8d0"></div>
+    <div class="preset" id="preset-linen" title="Linen" style="background:#f0ece4"></div>
+    <div class="preset" id="preset-sky" title="Sky" style="background:#dce8f0"></div>
+    <div class="preset" id="preset-peach" title="Peach" style="background:#f5e0d8"></div>
+    <div class="preset" id="preset-dark" title="Dark" style="background:#2a2318"></div>
+  </div>
+
+  <div class="color-rows">
+    <div class="color-row">
+      <label>Background</label>
+      <input type="color" id="c-bg" oninput="livePreview()">
+    </div>
+    <div class="color-row">
+      <label>Card</label>
+      <input type="color" id="c-card" oninput="livePreview()">
+    </div>
+    <div class="color-row">
+      <label>Text</label>
+      <input type="color" id="c-text" oninput="livePreview()">
+    </div>
+    <div class="color-row">
+      <label>Accent</label>
+      <input type="color" id="c-accent" oninput="livePreview()">
+    </div>
+    <div class="color-row">
+      <label>Muted</label>
+      <input type="color" id="c-muted" oninput="livePreview()">
+    </div>
+  </div>
+
+  <div class="panel-btn-row">
+    <button class="panel-btn panel-btn-save" onclick="saveColors()">save</button>
+    <button class="panel-btn panel-btn-reset" onclick="resetColors()">reset</button>
+  </div>
+</div>
+
+<script>
+const messages = [
+  // Original ALL CAPS TUESDAY posts
+  "YOU HAVE TO BE YOUR BIGGEST ADVOCATE. CELEBRATE YOUR WINS. TALK ABOUT YOUR GROWTH. BE PROUD.",
+  "IF AN OPPORTUNITY HAS PRESENTED ITSELF TO YOU, THAT MEANS YOU ARE READY FOR IT. BELIEVE IN YOURSELF AND GO FOR IT.",
+  "TAKE A MOMENT AND REMEMBER WHERE YOU WERE A FEW YEARS AGO AND HOW PROUD YOUR PAST SELF WOULD BE KNOWING WHERE YOU ARE TODAY. YOU MIGHT NOT BE EXACTLY WHERE YOU WANT TO BE, BUT YOU'RE MAKING PROGRESS, AND THAT'S A BEAUTIFUL THING.",
+  "YOU'RE ON YOUR OWN TIMELINE. WHAT'S YOURS WILL COME WHEN IT'S TIME. FOCUS ON WHAT YOU NEED TO AND YOU GOT THIS.",
+  "STOP WORRYING ABOUT EVERYTHING THAT CAN GO WRONG AND START FOCUSING ON WHAT CAN GO RIGHT.",
+  "NOT EVERYTHING NEEDS TO GET DONE OR FIGURED OUT TODAY. PRIORITIZE WHAT YOU CAN AND DON'T OVERDO IT. ONE THING AT A TIME.",
+  "YOU'VE DONE IT BEFORE, YOU CAN DO IT AGAIN. YOU'VE ALWAYS MADE IT PAST THE HARD STUFF AND COME OUT STRONGER.",
+  "MAKE IT A HABIT TO CHECK IN ON YOURSELF. WE'RE OFTEN RUNNING AT TOP SPEED. YOU DON'T HAVE TO DO IT ALONE.",
+  "WORKING ON YOURSELF IS A PROCESS. THERE WILL BE GOOD DAYS AND DAYS WHEN YOU FEEL OFF. KEEP GROWING AND DON'T THROW IN THE TOWEL.",
+  "EACH DAY IS A RESET WITH NEW OPPORTUNITIES. YESTERDAY MIGHT HAVE BEEN AN OFF DAY, BUT THAT DOESN'T HAVE TO DETERMINE THE REST OF YOUR WEEK.",
+  "IF YOU'RE NERVOUS OR SCARED FOR WHAT'S AHEAD, JUST KNOW THAT THE OPPORTUNITY WOULDN'T SHOW UP UNLESS YOU WERE READY FOR IT.",
+  "IT'S OKAY TO HAVE NON-NEGOTIABLES. IF SOMETHING LIKE EXERCISE OR QUIET TIME IS WHAT YOU NEED TO CENTER YOURSELF, MAKE IT A PART OF YOUR DAILY LIFE. PROTECT YOUR PEACE.",
+  "KINDNESS ISN'T JUST HOW YOU TREAT OTHER PEOPLE. IT'S HOW YOU TREAT YOURSELF ON THE DAYS YOU DON'T FEEL LIKE MUCH. THE WORLD GETS A LOT SOFTER WHEN YOU PRACTICE BOTH.",
+  "MAKE TIME FOR JOY EVEN WHEN LIFE FEELS TOO BUSY FOR IT. ESPECIALLY WHEN LIFE FEELS TOO BUSY FOR IT. JOY ISN'T A REWARD YOU EARN AT THE END OF THE TO-DO LIST.",
+  "STAYING CONSISTENT DOESN'T MEAN BEING PERFECT. IT MEANS COMING BACK TO YOURSELF OVER AND OVER AGAIN. TODAY'S A CHANCE TO RE-ROOT.",
+  "EVERY CONNECTION YOU MAKE IS A BRIDGE. SOME WILL LEAD TO NEW PLACES. SOME WILL JUST MAKE TODAY A LITTLE BRIGHTER. EITHER WAY, YOU'RE NOT BUILDING ALONE.",
+  "YOU'RE ALLOWED TO BACK YOURSELF EVEN IF YOU DON'T HAVE ALL THE EVIDENCE YET. CONFIDENCE IS BUILT BY DOING, NOT BY WAITING FOR CERTAINTY.",
+  "OFFER YOURSELF THE SAME GENTLENESS YOU'D GIVE A FRIEND. YOU DESERVE THE SOFT WORDS, THE PATIENCE, THE GRACE. NOT LATER. NOW.",
+  "YOU DON'T HAVE TO SHRINK TO FIT SOMEONE ELSE'S IDEA OF WHO YOU SHOULD BE. THE RIGHT PEOPLE WILL RECOGNIZE YOU AS YOU ARE.",
+  "SOMETIMES THE SIMPLEST GESTURE MAKES THE BIGGEST IMPACT. A CHECK-IN, A KIND WORD, A QUICK 'HOW ARE YOU REALLY?' YOU NEVER KNOW HOW MUCH SOMEONE MIGHT NEED IT TODAY.",
+  "NOT EVERYTHING HAS TO HAPPEN THIS SEASON. SOME THINGS NEED MORE TIME TO RIPEN. TRUST THAT YOUR PACE HAS A PURPOSE.",
+  "SOME DOORS DON'T OPEN BECAUSE YOU'RE SUPPOSED TO BUILD YOUR OWN. ONE STEP AT A TIME. YOU'RE MORE CAPABLE THAN YOU THINK.",
+  "EVERY GOOD THING YOU'VE EVER DONE STARTED WITH ONE SMALL ACT OF COURAGE. TODAY COULD BE THE NEXT ONE.",
+  "THERE'S SOMETHING BEAUTIFUL ABOUT NOT KNOWING WHAT'S NEXT BECAUSE IT MEANS ANYTHING'S POSSIBLE. KEEP EXPLORING.",
+  "YOU'RE NOT BEHIND. YOU'RE JUST IN A DIFFERENT PART OF YOUR OWN STORY. FOCUS ON YOU.",
+  "YOUR WORTH ISN'T BASED ON OUTPUT. YOU'RE ENOUGH EVEN ON YOUR SLOWEST DAYS.",
+  "YOU DON'T HAVE TO BE IN CONTROL OF EVERYTHING. SOME OF THE BEST THINGS GROW IN THE SPACE YOU CAN'T MANAGE. LET GO A LITTLE.",
+  "THE WAY YOU SPEAK TO YOURSELF SHAPES EVERYTHING. TRY A SOFTER TONE.",
+  "SO MANY THINGS YOU ONCE DREAMED ABOUT ARE JUST PART OF YOUR LIFE NOW. LET THAT ACTUALLY SINK IN.",
+  "YOU'RE ALLOWED TO WANT MORE FROM YOUR LIFE. NOT OUT OF DISCONTENT, BUT OUT OF POSSIBILITY. YOU'RE NOT DONE BECOMING.",
+  "ONE COLD OUTREACH CAN CHANGE YOUR WHOLE TRAJECTORY. SEND THE MESSAGE. THE WORST THAT CAN HAPPEN IS YOU STAY EXACTLY WHERE YOU ARE RIGHT NOW.",
+  "REMEMBER HOW MANY TIMES YOU SAID 'I COULD NEVER DO THAT?' AND THEN YOU DID IT ANYWAY. KEEP THAT ENERGY.",
+  "THE MOMENT YOU STOP TRYING TO IMPRESS PEOPLE IS THE MOMENT YOU START ATTRACTING THE RIGHT ONES.",
+  "YOU SHOWED UP, YOU LEARNED A FEW THINGS, AND YOU CHANGED IN WAYS YOU DIDN'T EXPECT. THAT'S ENOUGH.",
+  "SOME PARTS OF LIFE GET BETTER WHEN YOU STOP TRYING TO OPTIMIZE THEM. SOME THINGS JUST NEED YOUR ATTENTION AND A LITTLE PATIENCE.",
+  "YOU ARE A HUMAN, NOT A ROBOT. STOP WORRYING ABOUT OUTPUT AND JUST FOCUS ON WHAT YOU NEED TO DO TODAY.",
+  "THE COMPARISON TRAP IS A LIE. YOU ARE DOING GREAT.",
+  "FEELING NERVOUS USUALLY MEANS YOU CARE. TAKE IT ONE STEP AT A TIME. YOU'RE MORE PREPARED THAN YOU THINK.",
+  // New ones in Max's voice
+  "YOU WORRY WAY TOO MUCH FOR SOMEONE WHO ALWAYS FIGURES IT OUT.",
+  "THE BEST PART OF YOU IS YOU. YOUR EXPERIENCE, YOUR INSIGHT, YOUR KINDNESS. DON'T OUTSOURCE THAT SPARK.",
+  "YOU DON'T NEED TO BE OPERATING AT 100 EVERY SINGLE DAY. SOME DAYS ARE BETTER THAN OTHERS. THE IMPORTANT PART IS YOU ARE SHOWING UP.",
+  "TELL YOUR FRIENDS YOU'RE PROUD OF THEM. DO IT TODAY. DON'T WAIT.",
+  "BE NERVOUS BUT DO IT ANYWAY.",
+  "A LOT OF LIFE IS JUST RELEARNING THINGS YOU ALREADY KNEW BUT FORGOT TO PRACTICE.",
+  "THE PRESSURE TO BE EXTRAORDINARY IS JUST ANOTHER WAY TO KEEP YOU FROM ENJOYING THE ORDINARY LIFE YOU ALREADY HAVE.",
+  "YOUR OUTPUT IS THE LEAST IMPORTANT THING ABOUT YOU.",
+  "SOME DAYS THINGS CLICK AND SOME DAYS THEY DON'T. BOTH ARE OKAY. YOU'RE FIGURING IT OUT AS YOU GO AND THAT'S EXACTLY WHAT YOU'RE SUPPOSED TO BE DOING.",
+  "YOU HAVE 1,000 THINGS ON YOUR PLATE AND YOU'RE STILL HERE. THAT'S NOT NOTHING. THAT'S ACTUALLY EVERYTHING.",
+  "STOP COMPARING YOUR CHAPTER 3 TO SOMEONE ELSE'S CHAPTER 20. YOU'RE WRITING YOUR OWN BOOK.",
+  "REST IS NOT QUITTING. REST IS HOW YOU COME BACK STRONGER. TAKE THE BREAK.",
+  "YOU DON'T HAVE TO HAVE IT ALL FIGURED OUT TO MOVE FORWARD. JUST TAKE THE NEXT STEP.",
+  "GROWTH ISN'T ALWAYS LOUD. SOMETIMES IT LOOKS LIKE FINALLY SAYING NO. SOMETIMES IT LOOKS LIKE SITTING STILL.",
+  "YOU ARE NOT YOUR WORST DAY. YOU ARE ALSO NOT YOUR BEST. YOU'RE THE WHOLE THING — AND THE WHOLE THING IS WORTH SHOWING UP FOR.",
+  "GIVE YOURSELF THE SAME GRACE YOU'D GIVE YOUR BEST FRIEND ON THEIR HARDEST DAY.",
+  "PROGRESS COMPOUNDS. THE DAYS IT FEELS SLOW ARE STILL COUNTING.",
+  "YOU DON'T HAVE TO EARN REST. YOU DON'T HAVE TO EARN PEACE. THEY BELONG TO YOU ALREADY.",
+  "THE RIGHT PEOPLE AREN'T GOING ANYWHERE. SHOW UP AS YOU ARE AND LET THAT BE THE FILTER.",
+  "TODAY IS A GOOD DAY TO REMEMBER THAT YOU'VE SURVIVED 100% OF YOUR HARD DAYS SO FAR.",
+  "BE KIND TO THE VERSION OF YOURSELF THAT DIDN'T KNOW BETTER YET. THEY WERE DOING THEIR BEST.",
+  "WHAT YOU'RE BUILDING MATTERS. EVEN WHEN IT FEELS SMALL. ESPECIALLY WHEN IT FEELS SMALL.",
+  "IT'S ONLY MONDAY. FOCUS ON WHAT YOU CAN, AND LET THAT BE ENOUGH.",  // will be funny on mondays
+  "SOMEONE OUT THERE NEEDED TO SEE EXACTLY WHAT YOU POSTED, BUILT, OR SHARED TODAY. KEEP GOING.",
+  "YOU DON'T HAVE TO PERFORM BEING OKAY. JUST BE WHERE YOU ARE.",
+  "THE SOFT VERSION OF YOU IS STILL THE STRONG VERSION OF YOU.",
+];
+
+let currentIndex = -1;
+
+function getDayOfYear() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  return Math.floor((now - start) / 86400000);
+}
+
+function getDayName() {
+  return ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()];
+}
+
+function getBadgeText(dayName) {
+  if (dayName === 'Tuesday') return 'It is actually Tuesday. You showed up.';
+  return `Even though it's ${dayName}, the message remains the same.`;
+}
+
+function dailyMessage() {
+  showMessage(getDayOfYear() % messages.length);
+}
+
+function nextMessage() {
+  let next;
+  do { next = Math.floor(Math.random() * messages.length); }
+  while (next === currentIndex && messages.length > 1);
+  showMessage(next);
+}
+
+function showMessage(idx) {
+  const el = document.getElementById('message-text');
+  el.classList.add('out');
+  setTimeout(() => {
+    currentIndex = idx;
+    el.textContent = messages[idx];
+    el.classList.remove('out');
+  }, 200);
+}
+
+function shareMessage() {
+  const text = messages[currentIndex];
+  const shareText = text + '\n\n— ALL CAPS TUESDAY by Max Pete\nmaxpete.substack.com';
+  if (navigator.share) {
+    navigator.share({ title: 'ALL CAPS TUESDAY', text: shareText });
+  } else {
+    navigator.clipboard.writeText(shareText).then(() => {
+      const btn = [...document.querySelectorAll('.btn-ghost')].find(b => b.textContent.includes('share'));
+      if (btn) {
+        btn.textContent = 'copied!';
+        setTimeout(() => btn.textContent = 'share', 1800);
+      }
+    });
+  }
+}
+
+function updateStreak() {
+  const today = getDayOfYear();
+  const last = parseInt(localStorage.getItem('act-last') || '0');
+  let streak = parseInt(localStorage.getItem('act-streak') || '1');
+  if (last === today - 1) streak++;
+  else if (last !== today) streak = 1;
+  localStorage.setItem('act-last', today);
+  localStorage.setItem('act-streak', streak);
+  if (streak > 1) {
+    document.getElementById('streak-display').innerHTML =
+      `<strong>${streak} days</strong> in a row. you keep coming back. that says something.`;
+  }
+}
+
+// ── COLOR EDITOR ──────────────────────────────────────
+const DEFAULTS = {
+  '--bg':         '#d6e8d0',
+  '--bg-card':    '#eef5ea',
+  '--bg-hover':   '#ccdfc6',
+  '--border':     '#b2ccaa',
+  '--text':       '#253d25',
+  '--muted':      '#6a8a65',
+  '--accent':     '#c4604a',
+  '--accent-soft':'#fae4de',
+  '--warm':       '#e8a87c',
+};
+
+const PRESETS = {
+  sage:  { '--bg':'#d6e8d0','--bg-card':'#eef5ea','--bg-hover':'#ccdfc6','--border':'#b2ccaa','--text':'#253d25','--muted':'#6a8a65','--accent':'#c4604a','--accent-soft':'#fae4de','--warm':'#e8a87c' },
+  linen: { '--bg':'#f0ece4','--bg-card':'#faf8f4','--bg-hover':'#e6e0d5','--border':'#d4ccc0','--text':'#2e2519','--muted':'#8c7d6a','--accent':'#b5541e','--accent-soft':'#fce8dd','--warm':'#d4966a' },
+  sky:   { '--bg':'#dce8f0','--bg-card':'#eef4f8','--bg-hover':'#ccdde8','--border':'#a8c4d8','--text':'#1a2e3d','--muted':'#5a7a90','--accent':'#c06040','--accent-soft':'#fae0d8','--warm':'#e8a87c' },
+  peach: { '--bg':'#f5e0d8','--bg-card':'#fdf0ea','--bg-hover':'#ecd0c5','--border':'#d8b4a5','--text':'#3d1f18','--muted':'#9a6255','--accent':'#a03820','--accent-soft':'#fce8e0','--warm':'#d4906a' },
+  dark:  { '--bg':'#2a2318','--bg-card':'#352d20','--bg-hover':'#3d3425','--border':'#4a3f2f','--text':'#f0e8d8','--muted':'#9a8a70','--accent':'#e07040','--accent-soft':'#5a2a18','--warm':'#c08850' },
+};
+
+function applyColors(scheme) {
+  const root = document.documentElement;
+  Object.entries(scheme).forEach(([k, v]) => root.style.setProperty(k, v));
+}
+
+function livePreview() {
+  applyColors({
+    '--bg':    document.getElementById('c-bg').value,
+    '--bg-card': document.getElementById('c-card').value,
+    '--bg-hover': shadeColor(document.getElementById('c-bg').value, -8),
+    '--text':  document.getElementById('c-text').value,
+    '--accent':document.getElementById('c-accent').value,
+    '--muted': document.getElementById('c-muted').value,
+  });
+}
+
+function shadeColor(hex, pct) {
+  const n = parseInt(hex.slice(1), 16);
+  const r = Math.min(255, Math.max(0, (n >> 16) + pct));
+  const g = Math.min(255, Math.max(0, ((n >> 8) & 0xff) + pct));
+  const b = Math.min(255, Math.max(0, (n & 0xff) + pct));
+  return '#' + [r,g,b].map(x => x.toString(16).padStart(2,'0')).join('');
+}
+
+function syncPickers(scheme) {
+  document.getElementById('c-bg').value    = scheme['--bg'];
+  document.getElementById('c-card').value  = scheme['--bg-card'];
+  document.getElementById('c-text').value  = scheme['--text'];
+  document.getElementById('c-accent').value= scheme['--accent'];
+  document.getElementById('c-muted').value = scheme['--muted'];
+}
+
+function saveColors() {
+  const scheme = {
+    '--bg':    document.getElementById('c-bg').value,
+    '--bg-card': document.getElementById('c-card').value,
+    '--bg-hover': shadeColor(document.getElementById('c-bg').value, -8),
+    '--border':   shadeColor(document.getElementById('c-bg').value, -20),
+    '--text':  document.getElementById('c-text').value,
+    '--accent':document.getElementById('c-accent').value,
+    '--accent-soft': shadeColor(document.getElementById('c-accent').value, 60),
+    '--muted': document.getElementById('c-muted').value,
+    '--warm':  document.getElementById('c-warm') ? document.getElementById('c-warm').value : DEFAULTS['--warm'],
+  };
+  localStorage.setItem('act-colors', JSON.stringify(scheme));
+  applyColors(scheme);
+  const btn = document.querySelector('.panel-btn-save');
+  btn.textContent = 'saved!';
+  setTimeout(() => btn.textContent = 'save', 1500);
+}
+
+function resetColors() {
+  localStorage.removeItem('act-colors');
+  applyColors(DEFAULTS);
+  syncPickers(DEFAULTS);
+}
+
+function loadSavedColors() {
+  const saved = localStorage.getItem('act-colors');
+  if (saved) {
+    const scheme = JSON.parse(saved);
+    applyColors(scheme);
+    syncPickers(scheme);
+  } else {
+    syncPickers(DEFAULTS);
+  }
+}
+
+function applyPreset(name) {
+  const p = PRESETS[name];
+  applyColors(p);
+  syncPickers(p);
+  document.querySelectorAll('.preset').forEach(el => el.classList.remove('active'));
+  document.getElementById('preset-' + name).classList.add('active');
+}
+
+// Panel toggle
+document.getElementById('color-toggle').addEventListener('click', () => {
+  document.getElementById('color-panel').classList.toggle('open');
+});
+
+document.querySelectorAll('.preset').forEach(el => {
+  el.addEventListener('click', () => applyPreset(el.id.replace('preset-', '')));
+});
+
+// ── INIT ──────────────────────────────────────────────
+const dayName = getDayName();
+document.getElementById('day-badge').textContent = getBadgeText(dayName);
+updateStreak();
+dailyMessage();
+loadSavedColors();
+</script>
+
+</body>
+</html>
