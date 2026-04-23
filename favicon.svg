@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Rust/orange background — energetic, matches the brand accent -->
+  <rect width="64" height="64" rx="12" fill="#c4604a"/>
+  <!-- Bold "A" for ALL CAPS in white -->
+  <text x="32" y="47" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif"
+        font-size="44" font-weight="900" fill="#ffffff" text-anchor="middle">A</text>
+</svg>
